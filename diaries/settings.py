@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'diary',
+    'teacher_accounts',
 ]
+
+AUTH_USER_MODEL = 'teacher_accounts.Teachers'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
