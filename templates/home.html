@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
-
-        <a class="btn btn-primary px-3 py-5 mr-2" href="#">
+    <div class="mt-1 d-flex justify-content-center align-items-center h-100">
+        <a class="btn btn-primary px-3 py-5 mr-2" href="{% url 'teacher_accounts:teacher_login' %}">
             <h4>職員室</h4><br>(先生の皆さんはこちら)</a>
-
         <a class="btn btn-success px-3 py-5" href="#">
             <h4>教室</h4><br>(生徒の皆さんはこちら)</a>
-
     </div>
 {% endblock %}

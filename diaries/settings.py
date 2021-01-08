@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'diary',
     'teacher_accounts',
+    'widget_tweaks',
 ]
 
 AUTH_USER_MODEL = 'teacher_accounts.Teachers'
@@ -127,3 +128,7 @@ STATIC_URL = '/static/'
 STATIC_FILES = [
     STATIC_DIR,
 ]
+
+LOGIN_URL = '/diary/home'
+LOGIN_REDIRECT_URL = '/dairy/home'
+LOGOUT_REDIRECT_URL = '/diary/home'
