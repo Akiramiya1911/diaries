@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'diary',
     'teacher_accounts',
+    'classrooms',
     'widget_tweaks',
 ]
 
