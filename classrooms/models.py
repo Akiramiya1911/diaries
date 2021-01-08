@@ -5,9 +5,9 @@ from django.urls import reverse_lazy
 class Classrooms(models.Model):
 
     classname = models.CharField(max_length=150)
-    members = models.IntegerField()
+    members = models.PositiveIntegerField()
     teacher = models.ForeignKey(
-        'teacher_accounts.Teachers', on_delete=models.CASCADE
+        'accounts.Teachers', on_delete=models.CASCADE
     )
 
     class Meta:
