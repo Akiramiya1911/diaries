@@ -33,3 +33,6 @@ class Teachers(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return reverse_lazy('diary:home')
+
+    class Meta:
+        db_table = 'teachers'
