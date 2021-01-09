@@ -18,16 +18,28 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def create_superuser(self, username, email, password=None):
+        user = self.model(
+            username=username,
+            email=email,
+        )
+        user.set_password(password)
+        user.is_staff = True
+        user.is_active = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
 
 class Teachers(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=150)
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['USERNAME']
+    REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
 
