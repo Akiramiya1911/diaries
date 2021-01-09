@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 class="text-primary">みんなのDiariesへようこそ！</h1>
-    <div class="mb-5 d-flex justify-content-center align-items-center h-50">
-        <a class="btn btn-primary px-3 py-5 mr-2" href="{% url 'teacher_accounts:teacher_login' %}">
-            <h4>職員室</h4><br>(先生の皆さんはこちら)</a>
-        <a class="btn btn-success px-3 py-5" href="#">
-            <h4>教室</h4><br>(生徒の皆さんはこちら)</a>
+    <div class="row mt-5">
+        <div class="col-8 offset-1">
+            <h3 class="text-primary text-center">みんなのDiariesへようこそ！</h3>
+            <div class="row">
+                <a
+                    class="col-4 offset-2 btn btn-primary py-5 mt-3"
+                    href="{% url 'teacher_accounts:teacher_login' %}">
+                    <h4>職員室</h4>(先生の皆さんはこちら)</a>
+                <a class="col-4 offset-2 btn btn-success py-5 mt-3" href="#">
+                    <h4>教室</h4>(生徒の皆さんはこちら)</a>
+            </div>
+        </div>
     </div>
 {% endblock %}
