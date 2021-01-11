@@ -7,10 +7,9 @@ from django.urls import reverse_lazy
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username, email, password=None):
-        if not email:
-            raise ValueError('Emailを入力して下さい')
+    def create_user(self, attendance_number, username, email, password=None):
         user = self.model(
+            attendance_number=attendance_number,
             username=username,
             email=email
         )
@@ -18,8 +17,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self, attendance_number, username, email, password=None):
         user = self.model(
+            attendance_number=attendance_number,
             username=username,
             email=email,
         )
@@ -31,20 +31,22 @@ class UserManager(BaseUserManager):
         return user
 
 
-class Teachers(AbstractBaseUser, PermissionsMixin):
+class Students(AbstractBaseUser, PermissionsMixin):
 
+    attendance_number = models.PositiveIntegerField(unique=True)
     username = models.CharField(max_length=150)
-    email = models.EmailField(max_length=255, unique=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=True)
+    email = models.EmailField(max_length=255, null=True, blank=True)
+    classroom = models.ForeignKey(
+        'classrooms.Classrooms', on_delete=models.CASCADE
+    )
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = 'attendance_number'
+    REQUIRED_FIELDS = ['username', ]
 
     objects = UserManager()
 
     def get_absolute_url(self):
-        return reverse_lazy('classrooms:make_classroom')
+        return reverse_lazy('diary:home')
 
     class Meta:
-        db_table = 'teachers'
+        db_table = 'students'

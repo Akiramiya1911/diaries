@@ -4,11 +4,9 @@ from django.urls import reverse_lazy
 
 class Classrooms(models.Model):
 
+    teacher_name = models.CharField(max_length=150, null=True)
     classname = models.CharField(max_length=150)
     members = models.PositiveIntegerField()
-    teacher = models.ForeignKey(
-        'accounts.Teachers', on_delete=models.CASCADE
-    )
 
     class Meta:
         db_table = 'classrooms'

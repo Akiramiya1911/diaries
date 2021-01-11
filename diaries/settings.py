@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
 ]
 
-AUTH_USER_MODEL = 'accounts.Teachers'
+AUTH_USER_MODEL = 'accounts.Students'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

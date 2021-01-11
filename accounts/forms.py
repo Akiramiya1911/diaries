@@ -1,7 +1,8 @@
 from django import forms
-from .models import Teachers
+from .models import Students
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ValidationError
 
 
 class TeacherLoginForm(AuthenticationForm):
@@ -10,17 +11,25 @@ class TeacherLoginForm(AuthenticationForm):
 
 
 class TeacherRegistForm(forms.ModelForm):
+    attendance_number = forms.IntegerField(label='出席番号', min_value=1)
     username = forms.CharField(label='氏名')
-    email = forms.EmailField(label='メールアドレス')
     password = forms.CharField(label='パスワード', widget=forms.PasswordInput())
+    confirm_password = forms.CharField(label='パスワード', widget=forms.PasswordInput())
 
     class Meta:
-        model = Teachers
-        fields = ['username', 'email', 'password']
+        model = Students
+        fields = ['attendance_number', 'username', 'password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+        if password != confirm_password:
+            raise ValidationError('パスワードが一致しません')
 
     def save(self, commit=False):
-        teacher = super().save(commit=False)
-        validate_password(self.cleaned_data['password'], teacher)
-        teacher.set_password(self.cleaned_data['password'])
-        teacher.save()
-        return teacher
+        student = super().save(commit=False)
+        validate_password(self.cleaned_data['password'], student)
+        student.set_password(self.cleaned_data['password'])
+        student.save()
+        return student

@@ -3,7 +3,7 @@ from .views import (
     TeacherLoginView, TeacherLogoutView, TeacherRegistView
 )
 
-app_name = 'teacher_accounts'
+app_name = 'accounts'
 
 urlpatterns = [
     path('teacher_login/', TeacherLoginView.as_view(), name="teacher_login"),
