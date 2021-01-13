@@ -1,27 +1,23 @@
-from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic.edit import CreateView
-from .forms import TeacherLoginForm, TeacherRegistForm
-from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from django.forms import modelformset_factory
+from . import forms
+from classrooms.models import Classrooms
+from .models import Students
 
 
-class TeacherLoginView(LoginView):
+def student_regist_view(request):
 
-    template_name = 'teacher_login.html'
-    authentication_form = TeacherLoginForm
-
-
-class TeacherLogoutView(LogoutView):
-    pass
-
-
-class TeacherRegistView(CreateView):
-    template_name = 'teacher_regist.html'
-    form_class = TeacherRegistForm
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        username = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        teacher = authenticate(username=username, password=password)
-        login(self.request, teacher)
-        return response
+    classroom = Classrooms.objects.last()
+    student = Students.objects.last()
+    StudentsFormSet = modelformset_factory(Students, form=forms.StudentsRegistForm, extra=classroom.members)
+    if student:
+        formset = StudentsFormSet(request.POST or None, queryset=Students.objects.filter(id__gt=student.id))
+    else:
+        formset = StudentsFormSet(request.POST or None)
+    if formset.is_valid():
+        formset.save()
+        return redirect('diary:home')
+    return render(request, 'accounts/students_regist.html', context={
+        'formset': formset
+        }
+    )

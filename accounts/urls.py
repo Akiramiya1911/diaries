@@ -1,12 +1,8 @@
 from django.urls import path
-from .views import (
-    TeacherLoginView, TeacherLogoutView, TeacherRegistView
-)
+from . import views
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('teacher_login/', TeacherLoginView.as_view(), name="teacher_login"),
-    path('teacher_logout/', TeacherLogoutView.as_view(), name="teacher_logout"),
-    path('teacher_regist/', TeacherRegistView.as_view(), name="teacher_regist"),
+    path('students_regist/', views.student_regist_view, name="students_regist"),
 ]

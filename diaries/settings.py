@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'classrooms',
     'widget_tweaks',
+    'extra_views',
 ]
 
 AUTH_USER_MODEL = 'accounts.Students'

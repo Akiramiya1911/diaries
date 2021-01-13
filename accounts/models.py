@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
 
 class Students(AbstractBaseUser, PermissionsMixin):
 
-    attendance_number = models.PositiveIntegerField(unique=True)
+    attendance_number = models.CharField(max_length=10, unique=True)
     username = models.CharField(max_length=150)
     email = models.EmailField(max_length=255, null=True, blank=True)
     classroom = models.ForeignKey(

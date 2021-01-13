@@ -12,4 +12,4 @@ class Classrooms(models.Model):
         db_table = 'classrooms'
 
     def get_absolute_url(self):
-        return reverse_lazy('diary:home')
+        return reverse_lazy('accounts:students_regist')

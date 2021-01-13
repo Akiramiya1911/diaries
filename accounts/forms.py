@@ -1,20 +1,15 @@
 from django import forms
 from .models import Students
+from classrooms.models import Classrooms
 from django.contrib.auth.password_validation import validate_password
-from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 
 
-class TeacherLoginForm(AuthenticationForm):
-    username = forms.EmailField(label='メールアドレス')
-    password = forms.CharField(label='パスワード', widget=forms.PasswordInput())
-
-
-class TeacherRegistForm(forms.ModelForm):
-    attendance_number = forms.IntegerField(label='出席番号', min_value=1)
+class StudentsRegistForm(forms.ModelForm):
+    attendance_number = forms.CharField(label='出席番号')
     username = forms.CharField(label='氏名')
-    password = forms.CharField(label='パスワード', widget=forms.PasswordInput())
-    confirm_password = forms.CharField(label='パスワード', widget=forms.PasswordInput())
+    password = forms.CharField(label='初期パスワード', widget=forms.PasswordInput())
+    confirm_password = forms.CharField(label='初期パスワード(確認用)', widget=forms.PasswordInput())
 
     class Meta:
         model = Students
@@ -31,5 +26,7 @@ class TeacherRegistForm(forms.ModelForm):
         student = super().save(commit=False)
         validate_password(self.cleaned_data['password'], student)
         student.set_password(self.cleaned_data['password'])
+        classroom = Classrooms.objects.last()
+        student.classroom_id = classroom.id
         student.save()
         return student
